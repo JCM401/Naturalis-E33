@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Tienda - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:linear-gradient(rgba(10,30,20,0.85), rgba(10,30,20,0.85)),
+               url("fondo login.png");
+    background-size:cover;
+    background-attachment:fixed;
+    color:#eafff2;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:rgba(10,30,20,0.75);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+.logo img{
+    width:45px;
+    border-radius:50%;
+}
+
+.menu-btn{
+    display:none;
+    font-size:26px;
+    cursor:pointer;
+}
+
+nav a{
+    margin-left:18px;
+    color:#c8ffe1;
+    text-decoration:none;
+    position:relative;
+}
+
+nav a::after{
+    content:'';
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    width:0;
+    height:2px;
+    background:#7dffb3;
+    transition:0.3s;
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* CONTENIDO */
+main{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+main h2{
+    text-align:center;
+    margin-bottom:40px;
+    color:#b8ffd9;
+    font-size:32px;
+}
+
+/* GRID */
+.productos-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:30px;
+}
+
+.producto{
+    background:rgba(30,60,45,0.7);
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+    transition:0.4s;
+}
+
+.producto:hover{
+    transform:translateY(-10px);
+}
+
+.producto img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+.producto h4{
+    color:#7dffb3;
+}
+
+.producto .categoria{
+    font-size:13px;
+    opacity:0.8;
+}
+
+.producto .descripcion{
+    font-size:14px;
+    margin:10px 0;
+    line-height:1.5;
+}
+
+.producto .precio{
+    font-size:18px;
+    font-weight:600;
+}
+
+.producto input{
+    width:60px;
+    padding:5px;
+    border-radius:8px;
+    border:none;
+    text-align:center;
+}
+
+.producto button{
+    margin:6px;
+    padding:8px 14px;
+    border:none;
+    border-radius:20px;
+    background:#7dffb3;
+    cursor:pointer;
+    font-weight:500;
+}
+
+.producto button:hover{
+    background:#b8ffd9;
+}
+
+/* FOOTER */
+footer{
+    background:rgba(10,30,20,0.9);
+    padding:25px;
+    text-align:center;
+}
+
+@media(max-width:768px){
+    nav{
+        display:none;
+        position:absolute;
+        top:70px;
+        right:20px;
+        background:rgba(10,30,20,0.95);
+        padding:20px;
+        border-radius:15px;
+    }
+
+    nav a{
+        display:block;
+        margin:10px 0;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg">
+        NATURALIS
+    </div>
+
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+
+    <nav id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Productos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="blog.html">Blog</a>
+        <a href="reseñas.html">Reseñas</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<main>
+    <h2>🛒 Tienda Naturalis</h2>
+    <div id="contenedor-tienda" class="productos-grid"></div>
+</main>
+
+<footer>
+    <p>© Naturalis 2025 — Todos los derechos reservados</p>
+    <p>🌿 Productos ecológicos y sostenibles</p>
+</footer>
+
+<script>
+function toggleMenu(){
+    const menu = document.getElementById("menu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+/* PRODUCTOS */
+const listaProductos = [
+    {id:1,nombre:"Aceite de Oliva Orgánico",precio:12.99,categoria:"Bienestar",descripcion:"Aceite prensado en frío.",imagen:"aceiteoliva.png"},
+    {id:2,nombre:"Jabón Natural Artesanal",precio:5.49,categoria:"Cuidado Personal",descripcion:"Hecho a mano.",imagen:"jabonnatural.png"},
+    {id:3,nombre:"Miel Ecológica",precio:9.99,categoria:"Alimentos",descripcion:"Miel cruda natural.",imagen:"miel.png"},
+    {id:4,nombre:"Té Verde Orgánico",precio:7.99,categoria:"Bienestar",descripcion:"Infusión antioxidante.",imagen:"teverde.png"},
+    {id:5,nombre:"Crema Facial Natural",precio:14.99,categoria:"Cuidado Personal",descripcion:"Hidratación profunda.",imagen:"crema.png"},
+    {id:6,nombre:"Bálsamo Labial Natural",precio:4.99,categoria:"Cuidado Personal",descripcion:"Hidratación profunda para labios.",imagen:"balsamolabial.png"},
+    {id:7,nombre:"Shampoo Herbal Orgánico",precio:11.49,categoria:"Cuidado Personal",descripcion:"Fortalece y revitaliza el cabello.",imagen:"shampooherbal.png"},
+    {id:8,nombre:"Exfoliante Corporal Natural",precio:8.99,categoria:"Cuidado Personal",descripcion:"Renueva la piel naturalmente.",imagen:"exfoliante.png"},
+    {id:9,nombre:"Vela Aromática Ecológica",precio:6.99,categoria:"Hogar Natural",descripcion:"Aroma relajante y natural.",imagen:"velaaromatica.png"},
+    {id:10,nombre:"Semillas Orgánicas para Huerto",precio:3.99,categoria:"Jardinería",descripcion:"Cultiva tu propio huerto ecológico.",imagen:"semillas.png"}
+];
+
+/* MOSTRAR TIENDA */
+function mostrarTienda(){
+    const contenedor = document.getElementById("contenedor-tienda");
+    contenedor.innerHTML = "";
+
+    listaProductos.forEach(p=>{
+        contenedor.innerHTML += `
+        <div class="producto">
+            <img src="${p.imagen}">
+            <h4>${p.nombre}</h4>
+            <p class="categoria">${p.categoria}</p>
+            <p class="descripcion">${p.descripcion}</p>
+            <p class="precio">$${p.precio}</p>
+            <button onclick="agregarWishlist(${p.id})">❤️ Wishlist</button>
+        </div>`;
+    });
+}
+
+/* WISHLIST */
+function agregarWishlist(id){
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const producto = listaProductos.find(p => p.id === id);
+
+    const existe = wishlist.some(p => p.id === id);
+    if(existe){
+        alert("Este producto ya está en tu wishlist 💚");
+        return;
+    }
+
+    wishlist.push(producto);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    alert("Producto agregado a wishlist 🌿");
+}
+
+document.addEventListener("DOMContentLoaded", mostrarTienda);
+</script>
+
+</body>
+</html>

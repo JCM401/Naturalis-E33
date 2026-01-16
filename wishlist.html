@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Wishlist - Naturalis</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:linear-gradient(rgba(10,30,20,0.85), rgba(10,30,20,0.85)),
+               url("fondo login.png");
+    background-size:cover;
+    background-attachment:fixed;
+    color:#eafff2;
+}
+
+/* ===== HEADER ===== */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:rgba(10,30,20,0.75);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+.logo img{
+    width:45px;
+    border-radius:50%;
+}
+
+.menu-btn{
+    display:none;
+    font-size:26px;
+    cursor:pointer;
+}
+
+nav a{
+    margin-left:18px;
+    color:#c8ffe1;
+    text-decoration:none;
+}
+
+@media(max-width:768px){
+    nav{
+        display:none;
+        position:absolute;
+        top:70px;
+        right:20px;
+        background:rgba(10,30,20,0.95);
+        padding:20px;
+        border-radius:15px;
+    }
+    nav a{
+        display:block;
+        margin:10px 0;
+    }
+    .menu-btn{
+        display:block;
+    }
+}
+
+/* ===== CONTENIDO ===== */
+main{
+    max-width:1100px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:40px;
+    color:#b8ffd9;
+}
+
+/* ===== GRID ===== */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:30px;
+}
+
+.item{
+    background:rgba(30,60,45,0.7);
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 15px 30px rgba(0,0,0,0.5);
+}
+
+.item img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+.item h4{
+    color:#7dffb3;
+}
+
+.precio{
+    font-weight:600;
+    margin:10px 0;
+}
+
+/* ===== BOTONES ===== */
+.btn-wishlist,
+.btn-carrito{
+    margin:6px;
+    padding:8px 16px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.btn-wishlist{
+    background:#ff9f9f;
+}
+
+.btn-wishlist:hover{
+    background:#ffc0c0;
+}
+
+.btn-carrito{
+    background:#7dffb3;
+}
+
+.btn-carrito:hover{
+    background:#b8ffd9;
+}
+
+/* ===== FOOTER ===== */
+footer{
+    background:rgba(10,30,20,0.9);
+    padding:25px;
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg">
+        NATURALIS
+    </div>
+
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+
+    <nav id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Productos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="blog.html">Blog</a>
+        <a href="reseñas.html">Reseñas</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<main>
+    <h2>❤️ Tu Wishlist</h2>
+    <div id="contenedor-wishlist" class="grid"></div>
+</main>
+
+<footer>
+    <p>© Naturalis 2025 — Todos los derechos reservados</p>
+    <p>🌿 Productos ecológicos y sostenibles</p>
+</footer>
+
+<script>
+function toggleMenu(){
+    const menu = document.getElementById("menu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+function mostrarWishlist(){
+    const contenedor = document.getElementById("contenedor-wishlist");
+    contenedor.innerHTML = "";
+
+    if(wishlist.length === 0){
+        contenedor.innerHTML = "<p>Tu wishlist está vacía 🌱</p>";
+        return;
+    }
+
+    wishlist.forEach((prod, index)=>{
+        contenedor.innerHTML += `
+            <div class="item">
+                <img src="${prod.imagen}">
+                <h4>${prod.nombre}</h4>
+                <p class="precio">$${prod.precio}</p>
+
+                <button class="btn-wishlist" onclick="eliminar(${index})">
+                    ❌ Quitar
+                </button>
+
+                <button class="btn-carrito" onclick="moverAlCarrito(${index})">
+                    🛒 Mover al carrito
+                </button>
+            </div>
+        `;
+    });
+}
+
+function eliminar(index){
+    wishlist.splice(index,1);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    mostrarWishlist();
+}
+
+function moverAlCarrito(index){
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push(wishlist[index]);
+    wishlist.splice(index,1);
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+    mostrarWishlist();
+}
+
+document.addEventListener("DOMContentLoaded", mostrarWishlist);
+</script>
+
+</body>
+</html>

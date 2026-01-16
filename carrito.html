@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Carrito - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:linear-gradient(rgba(10,30,20,0.85), rgba(10,30,20,0.85)),
+               url("fondo login.png");
+    background-size:cover;
+    background-attachment:fixed;
+    color:#eafff2;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:rgba(10,30,20,0.8);
+    position:sticky;
+    top:0;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+}
+
+.logo img{
+    width:45px;
+    border-radius:50%;
+}
+
+nav a, .usuario-info{
+    margin-left:18px;
+    color:#c8ffe1;
+    text-decoration:none;
+}
+
+.cerrar-sesion{
+    cursor:pointer;
+    color:#ff8f8f;
+}
+
+main{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+main h2{
+    text-align:center;
+    font-size:32px;
+    color:#b8ffd9;
+    margin-bottom:40px;
+}
+
+.productos-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:30px;
+}
+
+.producto{
+    background:rgba(25,55,40,0.75);
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+}
+
+.producto img{
+    width:100%;
+    max-height:180px;
+    object-fit:contain;
+    margin-bottom:15px;
+}
+
+.producto h4{color:#7dffb3;}
+
+.producto input{
+    width:70px;
+    padding:6px;
+    border-radius:10px;
+    border:none;
+    text-align:center;
+    margin-top:8px;
+}
+
+.btn{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:600;
+    margin-top:10px;
+}
+
+.btn-eliminar{
+    border:2px solid #ff8f8f;
+    background:transparent;
+    color:#ff8f8f;
+}
+
+.total-box{
+    margin-top:40px;
+    background:rgba(20,45,35,0.85);
+    padding:30px;
+    border-radius:25px;
+    text-align:center;
+}
+
+.btn-pagar{
+    margin-top:20px;
+    background:linear-gradient(135deg,#e6ffe9,#b8ffd9);
+    color:#103020;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg">
+        NATURALIS
+    </div>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Productos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="blog.html">Blog</a>
+        <a href="reseñas.html">Reseñas</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<main>
+    <h2>🛒 Mi Carrito</h2>
+    <div id="carrito-contenedor" class="productos-grid"></div>
+
+    <div class="total-box">
+        <h3>Total: $<span id="total">0.00</span></h3>
+
+        <select id="formaPago">
+            <option value="Tarjeta">Tarjeta</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Transferencia">Transferencia</option>
+        </select>
+
+        <button class="btn btn-pagar" id="btnPagar">Pagar</button>
+    </div>
+</main>
+
+<script>
+// ===== USUARIO =====
+const usuarioLogueado = localStorage.getItem("usuarioLogueado");
+const menuUsuario = document.getElementById("menu-usuario");
+
+if(!usuarioLogueado){
+    window.location.href="login.html";
+}
+
+menuUsuario.innerHTML = `
+<span class="usuario-info">${usuarioLogueado}</span>
+<span class="cerrar-sesion" onclick="cerrarSesion()">Salir</span>
+`;
+
+function cerrarSesion(){
+    localStorage.clear();
+    window.location.href="index.html";
+}
+
+// ===== CARRITO =====
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+function recalcularTotal(){
+    let total = 0;
+    carrito.forEach(p => {
+        total += p.precio * p.cantidad;
+    });
+    document.getElementById("total").textContent = total.toFixed(2);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function mostrarCarrito(){
+    const cont = document.getElementById("carrito-contenedor");
+    cont.innerHTML = "";
+
+    if(carrito.length === 0){
+        cont.innerHTML = "<p>Tu carrito está vacío 🌱</p>";
+        document.getElementById("total").textContent = "0.00";
+        return;
+    }
+
+    carrito.forEach((p,i)=>{
+        cont.innerHTML += `
+        <div class="producto">
+            <img src="${p.imagen}">
+            <h4>${p.nombre}</h4>
+            <p>Precio: $${p.precio}</p>
+            <input type="number" min="1" value="${p.cantidad}"
+                onchange="actualizarCantidad(${i}, this.value)">
+            <button class="btn btn-eliminar" onclick="eliminar(${i})">Eliminar</button>
+        </div>`;
+    });
+
+    recalcularTotal();
+}
+
+function actualizarCantidad(index, valor){
+    carrito[index].cantidad = parseInt(valor);
+    recalcularTotal();
+}
+
+function eliminar(i){
+    carrito.splice(i,1);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    mostrarCarrito();
+}
+
+// ===== PAGO =====
+document.getElementById("btnPagar").onclick = ()=>{
+    if(carrito.length === 0){
+        alert("Carrito vacío");
+        return;
+    }
+
+    fetch("guardar_compra.php",{
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({
+            usuario: usuarioLogueado,
+            total: document.getElementById("total").textContent,
+            metodo: document.getElementById("formaPago").value,
+            carrito: carrito
+        })
+    })
+    .then(res=>res.json())
+    .then(r=>{
+        if(r.status === "ok"){
+            alert("Pago realizado con éxito 🌿");
+            localStorage.removeItem("carrito");
+            window.location.href="carrito.html";
+        }else{
+            alert("Error al guardar la compra");
+        }
+    });
+};
+
+document.addEventListener("DOMContentLoaded", mostrarCarrito);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Servicios - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(rgba(10,30,20,0.85), rgba(10,30,20,0.85)),
+                url("fondo login.png");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:#eafff2;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:rgba(10,30,20,0.8);
+    backdrop-filter: blur(10px);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+.logo img{
+    width:45px;
+    border-radius:50%;
+}
+
+.menu-btn{
+    display:none;
+    font-size:26px;
+    cursor:pointer;
+}
+
+nav a{
+    margin-left:20px;
+    color:#c8ffe1;
+    text-decoration:none;
+    font-weight:500;
+    position:relative;
+}
+
+nav a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    width:0%;
+    height:2px;
+    background:#7dffb3;
+    transition:0.3s;
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* MAIN */
+main{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+    animation: aparecer 1s ease;
+}
+
+@keyframes aparecer{
+    from{opacity:0; transform:translateY(30px)}
+    to{opacity:1; transform:translateY(0)}
+}
+
+h2{
+    text-align:center;
+    margin-bottom:15px;
+    font-size:36px;
+    color:#b8ffd9;
+}
+
+.subtitulo{
+    text-align:center;
+    max-width:850px;
+    margin:0 auto 50px;
+    font-size:16px;
+    color:#d9ffee;
+    line-height:1.7;
+}
+
+/* GRID */
+.servicios-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:35px;
+}
+
+/* CARD */
+.servicio-card{
+    background:rgba(25,55,40,0.75);
+    backdrop-filter: blur(15px);
+    border-radius:28px;
+    padding:35px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+    transition:0.4s;
+}
+
+.servicio-card:hover{
+    transform:translateY(-12px);
+    box-shadow:0 30px 60px rgba(0,0,0,0.7);
+}
+
+.icono{
+    font-size:42px;
+    margin-bottom:18px;
+}
+
+.servicio-card h3{
+    font-size:22px;
+    margin-bottom:12px;
+    color:#eafff2;
+}
+
+.servicio-card p{
+    font-size:14.5px;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+.lista{
+    font-size:14px;
+    line-height:1.7;
+    color:#c8ffe1;
+}
+
+.lista li{
+    margin-bottom:8px;
+}
+
+/* SECCION INFO */
+.info-extra{
+    margin-top:70px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:40px;
+}
+
+.info-box{
+    background:rgba(15,40,30,0.85);
+    padding:35px;
+    border-radius:30px;
+}
+
+.info-box h4{
+    font-size:22px;
+    margin-bottom:15px;
+    color:#7dffb3;
+}
+
+.info-box p{
+    font-size:15px;
+    line-height:1.7;
+}
+
+/* CONFIANZA */
+.confianza{
+    margin-top:70px;
+    background:rgba(15,40,30,0.85);
+    padding:45px;
+    border-radius:35px;
+    text-align:center;
+}
+
+.confianza h3{
+    color:#7dffb3;
+    margin-bottom:15px;
+    font-size:28px;
+}
+
+.confianza p{
+    max-width:800px;
+    margin:0 auto;
+    font-size:15.5px;
+    line-height:1.8;
+}
+
+/* FOOTER */
+footer{
+    background:rgba(10,30,20,0.9);
+    padding:25px;
+    text-align:center;
+    margin-top:70px;
+}
+
+footer p{
+    font-size:14px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    nav{
+        display:none;
+        position:absolute;
+        top:70px;
+        right:20px;
+        background:rgba(10,30,20,0.95);
+        padding:20px;
+        border-radius:15px;
+    }
+
+    nav a{
+        display:block;
+        margin:10px 0;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg" alt="Naturalis">
+        NATURALIS
+    </div>
+
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+
+    <nav id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Productos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="blog.html">Blog</a>
+        <a href="reseñas.html">Reseñas</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<main>
+<h2>🌿 Nuestros Servicios</h2>
+
+<p class="subtitulo">
+En Naturalis no solo vendemos productos ecológicos, ofrecemos soluciones integrales
+para quienes buscan mejorar su calidad de vida, cuidar el planeta y adoptar hábitos
+más saludables de forma consciente y responsable.
+</p>
+
+<div class="servicios-grid">
+
+<div class="servicio-card">
+    <div class="icono">🌱</div>
+    <h3>Asesoría Natural Integral</h3>
+    <p>
+        Nuestro equipo te orienta de forma personalizada para que tomes decisiones
+        informadas sobre productos naturales y sostenibles.
+    </p>
+    <ul class="lista">
+        <li>✔ Diagnóstico de necesidades personales</li>
+        <li>✔ Recomendaciones saludables y ecológicas</li>
+        <li>✔ Acompañamiento continuo</li>
+    </ul>
+</div>
+
+<div class="servicio-card">
+    <div class="icono">🚚</div>
+    <h3>Logística y Entrega Responsable</h3>
+    <p>
+        Diseñamos un sistema de entrega eficiente que reduce el impacto ambiental
+        sin sacrificar rapidez ni seguridad.
+    </p>
+    <ul class="lista">
+        <li>✔ Entregas a domicilio programadas</li>
+        <li>✔ Empaques reciclables</li>
+        <li>✔ Seguimiento en tiempo real</li>
+    </ul>
+</div>
+
+<div class="servicio-card">
+    <div class="icono">📚</div>
+    <h3>Educación y Talleres Ecológicos</h3>
+    <p>
+        Creemos que el cambio comienza con el conocimiento. Ofrecemos espacios
+        educativos para fomentar hábitos sostenibles.
+    </p>
+    <ul class="lista">
+        <li>✔ Talleres presenciales y virtuales</li>
+        <li>✔ Formación en consumo responsable</li>
+        <li>✔ Comunidad consciente</li>
+    </ul>
+</div>
+
+</div>
+
+<div class="info-extra">
+
+<div class="info-box">
+    <h4>¿A quién van dirigidos nuestros servicios?</h4>
+    <p>
+        A personas, familias y emprendimientos que desean adoptar un estilo de vida
+        más saludable, reducir su huella ecológica y apoyar el comercio responsable.
+    </p>
+</div>
+
+<div class="info-box">
+    <h4>¿Por qué elegir Naturalis?</h4>
+    <p>
+        Porque combinamos experiencia, compromiso ambiental y atención humana,
+        ofreciendo soluciones reales que generan impacto positivo.
+    </p>
+</div>
+
+</div>
+
+<div class="confianza">
+    <h3>Nuestro Compromiso</h3>
+    <p>
+        En Naturalis trabajamos bajo principios de sostenibilidad, ética y transparencia.
+        Cada servicio está diseñado para generar bienestar tanto en las personas como
+        en el entorno, promoviendo un futuro más consciente y equilibrado.
+    </p>
+</div>
+
+</main>
+
+<footer>
+    <p>© Naturalis 2025 — Todos los derechos reservados</p>
+    <p>🌿 Productos ecológicos y sostenibles</p>
+</footer>
+
+<script>
+function toggleMenu(){
+    const menu=document.getElementById("menu");
+    menu.style.display=(menu.style.display==="block")?"none":"block";
+}
+</script>
+
+</body>
+</html>

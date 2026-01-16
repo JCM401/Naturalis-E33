@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Compra Exitosa - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(rgba(10,30,20,0.85), rgba(10,30,20,0.85)),
+                url("fondo login.png");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:#eafff2;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:rgba(10,30,20,0.8);
+    backdrop-filter: blur(10px);
+    position:sticky;
+    top:0;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+.logo img{
+    width:45px;
+    border-radius:50%;
+}
+
+nav a{
+    margin-left:20px;
+    color:#c8ffe1;
+    text-decoration:none;
+    font-weight:500;
+}
+
+/* MAIN */
+main{
+    min-height:70vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 20px;
+}
+
+.confirmacion-card{
+    background:rgba(25,55,40,0.75);
+    backdrop-filter: blur(15px);
+    border-radius:30px;
+    padding:50px 40px;
+    max-width:500px;
+    text-align:center;
+    box-shadow:0 30px 60px rgba(0,0,0,0.6);
+    animation: aparecer 0.8s ease;
+}
+
+@keyframes aparecer{
+    from{opacity:0; transform:translateY(30px)}
+    to{opacity:1; transform:translateY(0)}
+}
+
+.check{
+    font-size:60px;
+    color:#7dffb3;
+    margin-bottom:20px;
+}
+
+.confirmacion-card h2{
+    font-size:28px;
+    margin-bottom:15px;
+    color:#b8ffd9;
+}
+
+.confirmacion-card p{
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:25px;
+    color:#eafff2;
+}
+
+/* BOTONES */
+.btn{
+    display:block;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    margin-top:12px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.btn-inicio{
+    background:linear-gradient(135deg,#e6ffe9,#b8ffd9);
+    color:#103020;
+}
+
+.btn-pedidos{
+    background:transparent;
+    border:2px solid #7dffb3;
+    color:#7dffb3;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+/* FOOTER */
+footer{
+    background:rgba(10,30,20,0.9);
+    padding:25px;
+    text-align:center;
+}
+
+footer p{
+    font-size:14px;
+    margin-bottom:5px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg" alt="Naturalis">
+        NATURALIS
+    </div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="contacto.html">Contacto</a>
+    </nav>
+</header>
+
+<main>
+    <div class="confirmacion-card">
+        <div class="check">✅</div>
+        <h2>¡Compra realizada con éxito!</h2>
+        <p>
+            Gracias por confiar en <strong>Naturalis</strong>.  
+            Tu pago fue procesado correctamente y tu pedido está siendo preparado con productos
+            ecológicos y sostenibles 🌿
+        </p>
+
+        <button class="btn btn-inicio" onclick="window.location.href='index.html'">
+            Volver al inicio
+        </button>
+
+        <button class="btn btn-pedidos" onclick="window.location.href='carrito.html'">
+            Ver mis pedidos
+        </button>
+    </div>
+</main>
+
+<footer>
+    <p>© Naturalis 2025 — Todos los derechos reservados</p>
+    <p>🌿 Productos ecológicos y sostenibles</p>
+</footer>
+
+</body>
+</html>

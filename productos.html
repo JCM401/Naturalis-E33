@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Productos - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(rgba(10,30,20,0.85), rgba(10,30,20,0.85)),
+                url("fondo login.png");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:#eafff2;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:rgba(10,30,20,0.8);
+    position:sticky;
+    top:0;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+}
+
+.logo img{
+    width:45px;
+    border-radius:50%;
+}
+
+nav a{
+    margin-left:20px;
+    color:#c8ffe1;
+    text-decoration:none;
+}
+
+main{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+main h2{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:32px;
+    color:#b8ffd9;
+}
+
+.productos-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:30px;
+}
+
+.producto-card{
+    background:rgba(25,55,40,0.7);
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+
+.producto-img{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    border-radius:20px;
+    margin-bottom:15px;
+}
+
+.badge{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#7dffb3;
+    color:#103020;
+    padding:5px 12px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.precio{
+    font-size:18px;
+    font-weight:600;
+    color:#7dffb3;
+    margin-bottom:15px;
+}
+
+.btn{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:25px;
+    margin-top:10px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.btn-carrito{
+    background:#b8ffd9;
+    color:#103020;
+}
+
+.btn-wishlist{
+    background:transparent;
+    border:2px solid #7dffb3;
+    color:#7dffb3;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg">
+        NATURALIS
+    </div>
+
+    <nav>
+       <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Productos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="blog.html">Blog</a>
+        <a href="reseñas.html">Reseñas</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<main>
+    <h2>🌿 Nuestros Productos</h2>
+    <div id="contenedor-productos" class="productos-grid"></div>
+</main>
+
+<script>
+const listaProductos=[
+    {id:1,nombre:"Aceite de Oliva Orgánico",precio:12.99,descripcion:"Aceite prensado en frío.",etiqueta:"Orgánico",imagen:"aceiteoliva.png"},
+    {id:2,nombre:"Jabón Natural Artesanal",precio:5.49,descripcion:"Hecho a mano.",etiqueta:"Natural",imagen:"jabonnatural.png"},
+    {id:3,nombre:"Miel Ecológica",precio:9.99,descripcion:"Miel cruda.",etiqueta:"Eco",imagen:"miel.png"},
+    {id:4,nombre:"Té Verde Orgánico",precio:7.99,descripcion:"Infusión antioxidante.",etiqueta:"Salud",imagen:"teverde.png"},
+    {id:5,nombre:"Crema Facial Natural",precio:14.99,descripcion:"Hidratación profunda.",imagen:"crema.png"},
+    {id:6,nombre:"Bálsamo Labial Natural",precio:4.99,descripcion:"Hidratación profunda para labios.",imagen:"balsamolabial.png"},
+    {id:7,nombre:"Shampoo Herbal Orgánico",precio:11.49,categoria:"Cuidado Personal",descripcion:"Fortalece y revitaliza el cabello.",imagen:"shampooherbal.png"},
+    {id:8,nombre:"Exfoliante Corporal Natural",precio:8.99,categoria:"Cuidado Personal",descripcion:"Renueva la piel naturalmente.",imagen:"exfoliante.png"},
+    {id:9,nombre:"Vela Aromática Ecológica",precio:6.99,categoria:"Hogar Natural",descripcion:"Aroma relajante y natural.",imagen:"velaaromatica.png"},
+    {id:10,nombre:"Semillas Orgánicas para Huerto",precio:3.99,categoria:"Jardinería",descripcion:"Cultiva tu propio huerto ecológico.",imagen:"semillas.png"}
+];
+
+function mostrarProductos(){
+    const cont=document.getElementById("contenedor-productos");
+    cont.innerHTML="";
+
+    listaProductos.forEach(p=>{
+        cont.innerHTML+=`
+        <div class="producto-card">
+            <span class="badge">${p.etiqueta || ""}</span>
+            <img src="${p.imagen}" class="producto-img">
+            <h4>${p.nombre}</h4>
+            <p>${p.descripcion}</p>
+            <div class="precio">$${p.precio}</div>
+
+            <button class="btn btn-carrito" onclick="agregarCarrito(${p.id})">
+                Agregar al carrito
+            </button>
+        </div>`;
+    });
+}
+
+/* 🔥 AQUÍ ESTÁ LA CLAVE 🔥 */
+function agregarCarrito(id){
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const producto = listaProductos.find(p => p.id === id);
+    const existente = carrito.find(p => p.id === id);
+
+    if(existente){
+        existente.cantidad += 1;
+    } else {
+        carrito.push({
+            id: producto.id,
+            nombre: producto.nombre,
+            precio: producto.precio,
+            cantidad: 1,
+            imagen: producto.imagen   // ✅ AQUÍ
+        });
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    alert("Producto agregado al carrito 🛒🌿");
+}
+
+document.addEventListener("DOMContentLoaded", mostrarProductos);
+</script>
+
+</body>
+</html>

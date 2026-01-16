@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Login - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+/* FONDO GENERAL - TEMÁTICA VERDE */
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        linear-gradient(
+            rgba(15, 40, 25, 0.65),
+            rgba(15, 40, 25, 0.65)
+        ),
+        url("fondo.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    color:#ffffff;
+}
+
+/* CONTENEDOR LOGIN */
+.login-container{
+    width:360px;
+    padding:40px;
+    border-radius:20px;
+    background: rgba(25, 55, 40, 0.55);
+    backdrop-filter: blur(18px);
+    box-shadow: 
+        0 25px 50px rgba(0,0,0,0.6),
+        inset 0 0 40px rgba(255,255,255,0.05);
+    animation: aparecer 1s ease;
+}
+
+/* ANIMACIÓN */
+@keyframes aparecer{
+    from{opacity:0; transform:translateY(30px)}
+    to{opacity:1; transform:translateY(0)}
+}
+
+/* TÍTULO */
+.login-container h2{
+    text-align:center;
+    margin-bottom:25px;
+    font-weight:600;
+    letter-spacing:1px;
+    color:#d9ffe7;
+}
+
+/* INPUTS */
+.input-box{
+    margin-bottom:20px;
+}
+
+label{
+    font-size:13px;
+    margin-bottom:5px;
+    display:block;
+    color:#c9f0dc;
+}
+
+.input-box input,
+.input-box select{
+    width:100%;
+    padding:12px 15px;
+    border:none;
+    border-radius:12px;
+    outline:none;
+    background: rgba(255,255,255,0.15);
+    color:white;
+    font-size:14px;
+}
+
+.input-box input::placeholder{
+    color:#e0f5ea;
+}
+
+.input-box input:focus,
+.input-box select:focus{
+    background: rgba(255,255,255,0.25);
+}
+
+/* BOTÓN */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    font-size:15px;
+    font-weight:600;
+    color:#0f2f1c;
+    background: linear-gradient(135deg, #c6f5d6, #8fe3b0);
+    cursor:pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(143,227,176,0.9);
+}
+
+/* ERROR */
+.error{
+    color:#ffd6d6;
+    text-align:center;
+    margin-bottom:10px;
+    font-size:13px;
+}
+
+/* TEXTO FINAL */
+p{
+    text-align:center;
+    margin-top:20px;
+    font-size:14px;
+}
+
+p a{
+    color:#b9ffd9;
+    font-weight:600;
+    text-decoration:none;
+}
+
+p a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-container">
+    <h2>🪴 Naturalis 🪴</h2>
+
+    <div id="error" class="error"></div>
+
+    <div class="input-box">
+        <input type="text" id="usuario" placeholder="Usuario">
+    </div>
+
+    <div class="input-box">
+        <input type="password" id="password" placeholder="Contraseña">
+    </div>
+
+    <div class="input-box">
+        <label for="rol">Selecciona tu rol</label>
+        <select id="rol">
+            <option value="usuario">Usuario</option>
+            <option value="admin">Administrador</option>
+        </select>
+    </div>
+
+    <button id="btnLogin">Iniciar Sesión</button>
+
+    <p>¿No tienes cuenta? <a href="#" id="btnRegistrar">Regístrate</a></p>
+</div>
+
+<script>
+// CARGAR USUARIOS SOLO UNA VEZ
+let usuarios = JSON.parse(localStorage.getItem("usuarios"));
+
+if(!usuarios){
+    usuarios = [
+        {usuario: "admin", password: "admin123", rol: "admin"},
+        {usuario: "cliente", password: "cliente123", rol: "usuario"}
+    ];
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+}
+
+// LOGIN
+document.getElementById("btnLogin").addEventListener("click", function(){
+    const usuarioInput = document.getElementById("usuario").value.trim();
+    const passwordInput = document.getElementById("password").value.trim();
+    const rolSeleccionado = document.getElementById("rol").value;
+    const errorDiv = document.getElementById("error");
+
+    const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios"));
+
+    const usuarioEncontrado = usuariosGuardados.find(u => 
+        u.usuario === usuarioInput &&
+        u.password === passwordInput &&
+        u.rol === rolSeleccionado
+    );
+
+    if(usuarioEncontrado){
+        localStorage.setItem("usuarioLogueado", usuarioEncontrado.usuario);
+        localStorage.setItem("rolUsuario", usuarioEncontrado.rol);
+
+        if(usuarioEncontrado.rol === "admin"){
+            window.location.href = "admin.html";
+        } else {
+            window.location.href = "carrito.html";
+        }
+    } else {
+        errorDiv.textContent = "Usuario, contraseña o rol incorrectos";
+    }
+});
+
+// REGISTRO
+document.getElementById("btnRegistrar").addEventListener("click", function(){
+    const usuarioNuevo = prompt("Ingresa tu nombre de usuario:");
+    const passwordNuevo = prompt("Ingresa tu contraseña:");
+    const rolNuevo = prompt("Selecciona rol: usuario o admin");
+
+    if(!usuarioNuevo || !passwordNuevo || !rolNuevo){
+        alert("Datos inválidos");
+        return;
+    }
+
+    const rol = rolNuevo.toLowerCase();
+    if(rol !== "usuario" && rol !== "admin"){
+        alert("Rol inválido");
+        return;
+    }
+
+    let usuariosActuales = JSON.parse(localStorage.getItem("usuarios"));
+
+    if(usuariosActuales.some(u => u.usuario === usuarioNuevo)){
+        alert("El usuario ya existe");
+        return;
+    }
+
+    usuariosActuales.push({
+        usuario: usuarioNuevo,
+        password: passwordNuevo,
+        rol: rol
+    });
+
+    localStorage.setItem("usuarios", JSON.stringify(usuariosActuales));
+    alert("Usuario registrado con éxito ✅");
+});
+</script>
+
+
+</body>
+</html>

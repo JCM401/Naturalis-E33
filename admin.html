@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(rgba(10,30,20,0.9), rgba(10,30,20,0.9)),
+                url("fondo login.png");
+    background-size:cover;
+    background-attachment:fixed;
+    color:#eafff2;
+    padding:40px;
+}
+
+/* ===== HEADER ADMIN ===== */
+.header-admin{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.header-admin h2{
+    font-size:32px;
+    color:#7dffb3;
+}
+
+.cerrar-sesion{
+    cursor:pointer;
+    background:red;
+    padding:10px 18px;
+    border-radius:25px;
+    font-weight:600;
+}
+
+/* ===== INFO ===== */
+.info-admin{
+    max-width:900px;
+    margin-bottom:30px;
+    line-height:1.7;
+    color:#d9ffee;
+}
+
+/* ===== RESEÑAS ===== */
+.reseñas-admin{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:25px;
+}
+
+.reseña-card{
+    background:rgba(25,55,40,0.85);
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+    position:relative;
+    transition:0.4s;
+}
+
+.reseña-card:hover{
+    transform:translateY(-8px);
+}
+
+.reseña-card h4{
+    color:#7dffb3;
+    margin-bottom:5px;
+}
+
+.reseña-card span{
+    font-size:13px;
+    opacity:0.8;
+}
+
+.reseña-card p{
+    margin-top:15px;
+    font-size:14.5px;
+    line-height:1.7;
+}
+
+/* ===== BOTÓN ELIMINAR ===== */
+.btnEliminar{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:red;
+    border:none;
+    color:white;
+    padding:6px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* ===== VACÍO ===== */
+.vacio{
+    text-align:center;
+    opacity:0.8;
+    margin-top:40px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+    margin-top:70px;
+    text-align:center;
+    font-size:14px;
+    opacity:0.8;
+}
+
+/* ===== CONSULTAR ===== */
+.consultar{
+    cursor:pointer;
+    background:#2ecc71;
+    padding:10px 18px;
+    border-radius:25px;
+    font-weight:600;
+    color:#083b23;
+}
+.consultar:hover{
+    background:#27ae60;
+    color:white;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="header-admin">
+    <h2>🛠 Panel de Administración</h2>
+    <div>
+        <a href="consultar_compras.php" style="margin-right:15px;color:#7dffb3;font-weight:600;">
+            Consultar
+        </a>
+        <span class="cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</span>
+    </div>
+</div>
+
+
+
+<div class="info-admin">
+    Desde este panel puedes administrar el contenido generado por los usuarios.
+    Aquí se muestran todas las reseñas publicadas en la plataforma.  
+    Como administrador, tienes la capacidad de moderar y eliminar reseñas que no
+    cumplan con las políticas de Naturalis.
+</div>
+
+<h3 style="margin-bottom:25px; color:#b8ffd9;">📋 Reseñas de Usuarios</h3>
+
+<div id="contenedorReseñas" class="reseñas-admin"></div>
+
+<footer>
+    © Naturalis 2025 — Panel de Administración
+</footer>
+
+<script>
+// ===== VALIDAR ADMIN =====
+const usuarioLogueado = localStorage.getItem("usuarioLogueado");
+const rolUsuario = localStorage.getItem("rolUsuario");
+
+if(!usuarioLogueado || rolUsuario !== "admin"){
+    alert("Acceso denegado");
+    window.location.href = "login.html";
+}
+
+// ===== CERRAR SESIÓN =====
+function cerrarSesion(){
+    localStorage.removeItem("usuarioLogueado");
+    localStorage.removeItem("rolUsuario");
+    alert("Sesión cerrada");
+    window.location.href = "index.html";
+}
+
+// ===== CARGAR RESEÑAS =====
+function cargarReseñasAdmin(){
+    const contenedor = document.getElementById("contenedorReseñas");
+    const reseñas = JSON.parse(localStorage.getItem("reseñas")) || [];
+    contenedor.innerHTML = "";
+
+    if(reseñas.length === 0){
+        contenedor.innerHTML = `<p class="vacio">No hay reseñas registradas.</p>`;
+        return;
+    }
+
+    reseñas.forEach((r,index)=>{
+        const div = document.createElement("div");
+        div.className = "reseña-card";
+        div.innerHTML = `
+            <button class="btnEliminar" onclick="eliminarReseña(${index})">Eliminar</button>
+            <h4>${r.titulo}</h4>
+            <span>👤 ${r.usuario}</span>
+            <p>${r.contenido}</p>
+        `;
+        contenedor.appendChild(div);
+    });
+}
+
+// ===== ELIMINAR RESEÑA =====
+function eliminarReseña(index){
+    let reseñas = JSON.parse(localStorage.getItem("reseñas")) || [];
+    reseñas.splice(index,1);
+    localStorage.setItem("reseñas", JSON.stringify(reseñas));
+    cargarReseñasAdmin();
+}
+
+// ===== IR A CONSULTA DE COMPRAS =====
+function irACompras(){
+    window.location.href = "consultar_compras.php";
+}
+
+document.addEventListener("DOMContentLoaded", cargarReseñasAdmin);
+</script>
+
+</body>
+</html>

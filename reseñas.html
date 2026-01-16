@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reseñas - Naturalis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(rgba(10,30,20,0.85), rgba(10,30,20,0.85)),
+                url("fondo login.png");
+    background-size:cover;
+    background-attachment:fixed;
+    color:#eafff2;
+}
+
+/* ===== HEADER ===== */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:rgba(10,30,20,0.8);
+    backdrop-filter: blur(10px);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+.logo img{
+    width:45px;
+    border-radius:50%;
+}
+
+.menu-btn{
+    display:none;
+    font-size:26px;
+    cursor:pointer;
+}
+
+nav a{
+    margin-left:20px;
+    color:#c8ffe1;
+    text-decoration:none;
+    position:relative;
+}
+
+nav a::after{
+    content:'';
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    width:0;
+    height:2px;
+    background:#7dffb3;
+    transition:0.3s;
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* ===== MAIN ===== */
+main{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+h2{
+    text-align:center;
+    font-size:36px;
+    color:#b8ffd9;
+}
+
+.subtitulo{
+    text-align:center;
+    max-width:850px;
+    margin:15px auto 50px;
+    font-size:16px;
+    line-height:1.7;
+    color:#d9ffee;
+}
+
+/* ===== FORM ===== */
+.form-reseña{
+    max-width:600px;
+    margin:0 auto 60px;
+    background:rgba(25,55,40,0.8);
+    padding:35px;
+    border-radius:30px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+
+.form-reseña h3{
+    text-align:center;
+    margin-bottom:20px;
+    color:#7dffb3;
+}
+
+.form-reseña input,
+.form-reseña textarea{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    margin-bottom:15px;
+    outline:none;
+}
+
+.form-reseña button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    background:#7dffb3;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.form-reseña button:hover{
+    background:#b8ffd9;
+}
+
+/* ===== GRID RESEÑAS ===== */
+.reseñas-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:30px;
+}
+
+/* ===== CARD ===== */
+.reseña-card{
+    background:rgba(20,45,35,0.85);
+    padding:30px;
+    border-radius:30px;
+    position:relative;
+    box-shadow:0 15px 30px rgba(0,0,0,0.5);
+    transition:0.4s;
+}
+
+.reseña-card:hover{
+    transform:translateY(-10px);
+}
+
+.reseña-card h4{
+    color:#7dffb3;
+    margin-bottom:5px;
+}
+
+.reseña-card span{
+    font-size:13px;
+    opacity:0.8;
+}
+
+.reseña-card p{
+    margin-top:15px;
+    font-size:14.5px;
+    line-height:1.7;
+}
+
+.btnEliminar{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:red;
+    border:none;
+    color:white;
+    padding:6px 12px;
+    border-radius:15px;
+    cursor:pointer;
+}
+
+/* ===== FOOTER ===== */
+footer{
+    background:rgba(10,30,20,0.9);
+    padding:25px;
+    text-align:center;
+    margin-top:70px;
+}
+
+footer p{
+    font-size:14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+    nav{
+        display:none;
+        position:absolute;
+        top:70px;
+        right:20px;
+        background:rgba(10,30,20,0.95);
+        padding:20px;
+        border-radius:15px;
+    }
+
+    nav a{
+        display:block;
+        margin:10px 0;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg">
+        NATURALIS
+    </div>
+
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+
+    <nav id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Productos</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="blog.html">Blog</a>
+        <a href="reseñas.html">Reseñas</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<main>
+<h2>💬 Opiniones de Nuestros Clientes</h2>
+<p class="subtitulo">
+Las experiencias reales de nuestros clientes reflejan el compromiso de Naturalis
+con la calidad, la sostenibilidad y el bienestar. Tu opinión ayuda a otros a
+tomar decisiones conscientes.
+</p>
+
+<div class="form-reseña">
+    <h3>Deja tu reseña</h3>
+    <form id="formReseña">
+        <input type="text" id="usuarioNombre" placeholder="Tu nombre" required>
+        <input type="text" id="titulo" placeholder="Título de tu reseña" required>
+        <textarea id="contenido" placeholder="Escribe tu experiencia con Naturalis" rows="4" required></textarea>
+        <button type="submit">Enviar reseña</button>
+    </form>
+</div>
+
+<div id="contenedor-reseñas" class="reseñas-grid"></div>
+</main>
+
+<footer>
+    <p>© Naturalis 2025 — Todos los derechos reservados</p>
+    <p>🌿 Productos ecológicos y sostenibles</p>
+</footer>
+
+<script>
+function toggleMenu(){
+    const menu=document.getElementById("menu");
+    menu.style.display=(menu.style.display==="block")?"none":"block";
+}
+
+let reseñas = JSON.parse(localStorage.getItem("reseñas")) || [];
+
+function mostrarReseñas(){
+    const contenedor=document.getElementById("contenedor-reseñas");
+    contenedor.innerHTML="";
+    reseñas.forEach((r,index)=>{
+        const div=document.createElement("div");
+        div.className="reseña-card";
+        div.innerHTML=`
+            <button class="btnEliminar" onclick="eliminarReseña(${index})">X</button>
+            <h4>${r.titulo}</h4>
+            <span>👤 ${r.usuario}</span>
+            <p>${r.contenido}</p>
+        `;
+        contenedor.appendChild(div);
+    });
+}
+
+document.getElementById("formReseña").addEventListener("submit",function(e){
+    e.preventDefault();
+    const nueva={
+        usuario:usuarioNombre.value,
+        titulo:titulo.value,
+        contenido:contenido.value
+    };
+    reseñas.push(nueva);
+    localStorage.setItem("reseñas",JSON.stringify(reseñas));
+    this.reset();
+    mostrarReseñas();
+});
+
+function eliminarReseña(index){
+    reseñas.splice(index,1);
+    localStorage.setItem("reseñas",JSON.stringify(reseñas));
+    mostrarReseñas();
+}
+
+document.addEventListener("DOMContentLoaded",mostrarReseñas);
+</script>
+
+</body>
+</html>
